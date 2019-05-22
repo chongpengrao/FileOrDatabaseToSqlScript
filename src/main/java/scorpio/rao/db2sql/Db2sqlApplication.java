@@ -11,7 +11,7 @@ public class Db2sqlApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Db2sqlApplication.class, args);
         MainService bean = context.getBean(MainService.class);
-        bean.init();
+        bean.start();
     }
 
 }

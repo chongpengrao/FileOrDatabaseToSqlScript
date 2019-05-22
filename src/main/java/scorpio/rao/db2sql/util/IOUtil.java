@@ -1,9 +1,6 @@
 package scorpio.rao.db2sql.util;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 /**
  * Created by scorpio.rao on 2019/5/17
@@ -22,10 +19,38 @@ public class IOUtil {
         return writer;
     }
 
+    public static void writeNewLine(BufferedWriter writer){
+        try {
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static BufferedReader getReader(String url){
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(url), "UTF8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return reader;
+    }
+
     public static void closeWritter(BufferedWriter writer){
         try {
             writer.flush();
             writer.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void closeAll(BufferedWriter writer,BufferedReader reader){
+        try {
+            writer.flush();
+            writer.close();
+            reader.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -43,6 +68,7 @@ public class IOUtil {
     public static void writeCommit(BufferedWriter writer){
         try {
             writer.write("commit;");
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
