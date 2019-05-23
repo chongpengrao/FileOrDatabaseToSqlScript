@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cca5660d-5f2c-4729-bf63-ee791d9562d3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/MainService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/MainService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/TableConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/TableConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/scorpio/rao/db2sql/Db2sqlApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/scorpio/rao/db2sql/Db2sqlApplicationTests.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -65,27 +62,27 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="11" />
-          <entry key="java" value="10025" />
+          <entry key="java" value="10033" />
           <entry key="properties" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="10025" />
+          <entry key="JAVA" value="10033" />
           <entry key="PLAIN_TEXT" value="11" />
           <entry key="Properties" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="13" />
+          <entry key="java" value="14" />
           <entry key="properties" value="4" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="13" />
+          <entry key="JAVA" value="14" />
           <entry key="Properties" value="4" />
           <entry key="XML" value="1" />
         </counts>
@@ -97,8 +94,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/MainService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
+            <state relative-caret-position="117">
+              <caret line="201" column="120" selection-start-line="201" selection-start-column="120" selection-end-line="201" selection-end-column="120" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -375,7 +372,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558599356180" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558606093071" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -464,7 +461,7 @@
       <option name="presentableId" value="Default" />
       <updated>1558059149551</updated>
       <workItem from="1558059151496" duration="9645000" />
-      <workItem from="1558074117349" duration="92503000" />
+      <workItem from="1558074117349" duration="94937000" />
     </task>
     <servers />
   </component>
@@ -498,7 +495,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102148000" />
+    <option name="totallyTimeSpent" value="104582000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -605,20 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/util/IOUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -657,10 +640,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/util/IOUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="67" column="23" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="18" column="33" lean-forward="true" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/scorpio/rao/db2sql/service/MainService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="104" column="85" selection-start-line="104" selection-start-column="85" selection-end-line="104" selection-end-column="85" />
+        <state relative-caret-position="117">
+          <caret line="201" column="120" selection-start-line="201" selection-start-column="120" selection-end-line="201" selection-end-column="120" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

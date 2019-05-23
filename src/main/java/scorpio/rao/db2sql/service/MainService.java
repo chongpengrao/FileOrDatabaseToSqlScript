@@ -101,6 +101,7 @@ public class MainService {
                 });
                 //含有parentId的表需要去更新parentId字段的值  .. assetIdMap表的处理
                 if (tableWithParentId.contains(name)){
+                    IOUtil.writeCommit(writer);
                     String str = "update t."+name+" set t.parentid=(select "+name+"ID from "+name
                             +" where old_id=t.parentid) where t.parentid is not null;";
                     IOUtil.write(writer,str);
@@ -198,7 +199,7 @@ public class MainService {
                     // todo objid objtype 的先后顺序是个问题  ... 放在tablemap初始化的时候处理吧
                     if (isObjType(column)){
                         objType = results.getString(column);
-                        builder = objType==null ? builder.append("'',") : builder.append("'").append(objType).append("'");
+                        builder = objType==null ? builder.append("'',") : builder.append("'").append(objType).append("',");
                     }else if (isObjId(column)){
                         String objId = results.getString(column);
                         if (objId != null && objType != null && typeTableMap != null){
