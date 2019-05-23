@@ -38,11 +38,22 @@ public class TableConfig {
     //已经没有用的表+备份的表
     public static List<String> tableNoUse = new ArrayList<>();
 
+    //原封不动入库的表
+    public static List<String> noChangeTable = new ArrayList<>();
+
     static {
         init();
     }
 
     private static void init() {
+        //原封不动入库的表
+        noChangeTable.add("CTMSOBJECT");
+        noChangeTable.add("CTMSPROPERTY");
+        noChangeTable.add("CTMSVALUECONVERT");
+        noChangeTable.add("LINKSUBTYPE");
+        noChangeTable.add("ERRORCODE");
+
+
         //1)需要增加domainId字段的表
         needDomainIds.add("program");
         needDomainIds.add("series");
@@ -90,6 +101,10 @@ public class TableConfig {
         tableNoUse.add("DATAPRIVILEGETYPE");
         tableNoUse.add("ROLEDATAPRIVILEGE");
         tableNoUse.add("STAFFDATAPRIVILEGE");
+
+        //数据库已存在基础数据的表
+        tableNoUse.add("CASTROLE");
+        tableNoUse.add("EPGOPTION");
 
         //这几个表现场的数据,单独处理
         tableNoUse.add("PROGRAMPOSTER_CHAD");
@@ -390,6 +405,20 @@ public class TableConfig {
         m13.put("7","epgCategory");
         map.put("TAGSDTL",m13);
 
+        //ASSETIDMAP
+        Map<String,String> m14 = new HashMap<>();
+        m14.put("0","program");
+        m14.put("1","MetaPicture");
+        m14.put("6","BundledContent");
+        m14.put("7","Series");
+        m14.put("9","MediaContent");
+        m14.put("A","Category");
+        m14.put("B","Channel");
+        m14.put("C","Schedule");
+        m14.put("D","copyright");
+        m14.put("M","PhysicalChannel");
+        m14.put("Y","htmlcontent");
+        map.put("ASSETIDMAP",m14);
     }
 
 }
