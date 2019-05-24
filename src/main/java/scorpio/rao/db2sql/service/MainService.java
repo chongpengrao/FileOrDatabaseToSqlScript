@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
+import scorpio.rao.db2sql.config.TableConfig;
 import scorpio.rao.db2sql.util.DateUtil;
 import scorpio.rao.db2sql.util.IOUtil;
 
+import javax.annotation.Resource;
 import java.io.BufferedWriter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MainService {
 
-    @Autowired
+    @Resource(name = "jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -85,6 +87,7 @@ public class MainService {
             //数据脚本的存放路径
             String savePath = tableConfig.getBASE_URL()+name+"_insert.sql";
             BufferedWriter writer = IOUtil.getWriter(savePath);
+            //todo日期格式还是要转换的!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (TableConfig.noChangeTable.contains(name)){
                 list.forEach(e->{
                     String str = sql2txt+"("+e+");";
@@ -135,26 +138,43 @@ public class MainService {
         //获取这个表的列的总数
         int columnCount =columnFields.size();
 
-        //部分表数据插入时不需要做任何修改
+        //1)日期类型的列要转换
+        List<String> dateColumns = columnFields.stream()
+                .filter(pair -> pair.getValue().equals("DATE"))
+                .map(Pair::getKey)
+                .collect(Collectors.toList());
+
+        //3)数字类型的column
+        List<String> numberColumns = columnFields.stream()
+                .filter(pair -> pair.getValue().contains("NUMBER"))
+                .map(Pair::getKey)
+                .collect(Collectors.toList());
+
+        //部分表数据插入时不需要做任何修改:: 日期之类的还是要转换的!!!!!!!!!!!!!
         if (TableConfig.noChangeTable.contains(table)){
             while (results.next()){
                 StringBuilder builder = new StringBuilder();
                 for (int i=0;i<columnCount;i++){
                     String column = columns[i];
                     String str = results.getString(column);
-                    String s = "'" + str + "',";
-                    builder = str==null ? builder.append("null,") : builder.append(s);
+                    if (dateColumns.contains(column)) {
+                        builder.append(DateUtil.dateConvert(results.getString(column))).append(",");
+                    }else if (numberColumns.contains(column)){
+                        builder.append(str).append(",");
+                    }else {
+                        String s = "'" + str + "',";
+                        if (str == null) {
+                            builder.append("null,");
+                        } else {
+                            builder.append(s);
+                        }
+                    }
                 }
                 resultList.add(builder.append("0").toString());
             }
             return resultList;
         }
 
-        //1)日期类型的列要转换
-        List<String> dateColumns = columnFields.stream()
-                .filter(pair -> pair.getValue().equals("DATE"))
-                .map(Pair::getKey)
-                .collect(Collectors.toList());
         //2)含id字段的列的处理
         //parentid,objid/objecti,tables中没有的id
         Map<String,String> otherIdSql = new HashMap<>();
@@ -168,11 +188,6 @@ public class MainService {
                     return column;
                 }).collect(Collectors.toList());
 
-        //3)数字类型的column
-        List<String> numberColumns = columnFields.stream()
-                .filter(pair -> pair.getValue().contains("NUMBER"))
-                .map(Pair::getKey)
-                .collect(Collectors.toList());
         //4)表的id替换成自增id,(部分静态表没有sequence的除外)
         String tableId = table+"ID";
         String idStr = (tableId+".nextval").toLowerCase();
@@ -180,7 +195,7 @@ public class MainService {
         while(results.next()){
             String old_id = "''";
             StringBuilder builder = new StringBuilder();
-
+            String objType = null;
             for (int i=0;i<columns.length;i++){
                 String column = columns[i];
                 if (tableId.equals(column)){
@@ -197,11 +212,14 @@ public class MainService {
                         builder.append("null,");
                     }
                 }else {
-                    String objType = null;
                     // todo objid objtype 的先后顺序是个问题  ... 放在tablemap初始化的时候处理吧
                     if (isObjType(column)){
                         objType = results.getString(column);
-                        builder = objType==null ? builder.append("'',") : builder.append("'").append(objType).append("',");
+                        if (objType == null) {
+                            builder.append("'',");
+                        } else {
+                            builder.append("'").append(objType).append("',");
+                        }
                     }else if (isObjId(column)){
                         String objId = results.getString(column);
                         if (objId != null && objType != null && typeTableMap != null){
@@ -219,7 +237,11 @@ public class MainService {
                     }else {
                         //字符串的处理
                         String str = results.getString(column);
-                        builder = str==null ? builder.append("'',") : builder.append("'").append(str).append("',");
+                        if (str == null) {
+                            builder.append("'',");
+                        } else {
+                            builder.append("'").append(str).append("',");
+                        }
                     }
                 }
             }

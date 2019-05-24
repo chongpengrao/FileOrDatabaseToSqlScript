@@ -1,4 +1,4 @@
-package scorpio.rao.db2sql.service;
+package scorpio.rao.db2sql.config;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +26,9 @@ public class TableConfig {
     @Value("${ut.domainId}")
     private int domainId;
 
+    @Value("${sop.db.linkName}")
+    private String linkName;
+
     //表中含有objType/objectType,objId/objectId与其他表的关系
     public static Map<String,Map<String,String>> map = new HashMap<>();
 
@@ -45,6 +48,27 @@ public class TableConfig {
         init();
     }
 
+    //todo 数据库初始化脚本中含有下列表的数据........
+    //@./data/castrole.sql
+    //@./data/contentdefcfg.sql;
+    //@./data/ctmsobject.sql;
+    //@./data/ctmsproperty.sql;
+    //@./data/ctmsvalueconvert.sql;
+    //@./data/dataprivilegetype.sql;
+    //@./data/enumitem.sql;
+    //@./data/errorcode.sql;
+    //@./data/enumtype.sql;
+    //@./data/epgoption.sql;
+    //@./data/globalcodedef.sql;
+    //@./data/linksubtype.sql;
+    //@./data/metadef.sql;
+    //@./data/module.sql;
+    //@./data/moduleconfig.sql;
+    //@./data/picturetype.sql;
+    //@./data/privilege.sql;
+    //@./data/privilegesubsystem.sql;
+    //@./data/programtype.sql;
+    //@./data/staff.sql;
     private static void init() {
         //原封不动入库的表
         noChangeTable.add("CTMSOBJECT");
@@ -55,16 +79,17 @@ public class TableConfig {
 
 
         //1)需要增加domainId字段的表
-        needDomainIds.add("program");
-        needDomainIds.add("series");
-        needDomainIds.add("channel");
-        needDomainIds.add("epgcategory");
-        needDomainIds.add("bundledcontent");
-        needDomainIds.add("epgpage");
-        needDomainIds.add("adprogram");
-        needDomainIds.add("adplan");
-        needDomainIds.add("paper");
-        needDomainIds.add("question");
+        //todo............表名大写吧..................哭了!!!
+        needDomainIds.add("PROGRAM");
+        needDomainIds.add("SERIES");
+        needDomainIds.add("CHANNEL");
+        needDomainIds.add("EPGCATEGORY");
+        needDomainIds.add("BUNDLEDCONTENT");
+        needDomainIds.add("EPGPAGE");
+        needDomainIds.add("ADPROGRAM");
+        needDomainIds.add("ADPLAN");
+        needDomainIds.add("PAPER");
+        needDomainIds.add("QUESTION");
 
         //2)需要单独处理的表
         tablesNeedHandlerAlone.add("ASSETIDMAP");
@@ -105,6 +130,7 @@ public class TableConfig {
         //数据库已存在基础数据的表
         tableNoUse.add("CASTROLE");
         tableNoUse.add("EPGOPTION");
+        //TODO
 
         //这几个表现场的数据,单独处理
         tableNoUse.add("PROGRAMPOSTER_CHAD");
@@ -229,7 +255,7 @@ public class TableConfig {
         map8.put("7","physicalchannel");
         map8.put("8","category");
         map8.put("11","series");
-        map8.put("13","picture");
+        map8.put("13","metapicture");
         map8.put("23","iptvpackage");
         map8.put("24","iptvproduct");
         map8.put("25","contentservice");
@@ -367,7 +393,7 @@ public class TableConfig {
         m10.put("63","apkversion");
         m10.put("64","apkupgrade");
         m10.put("99","categorydtl");
-        m10.put("PC","picture");
+        m10.put("PC","metapicture");
         m10.put("65","adprogram");
         m10.put("66","adplace");
         m10.put("67","adplan");
@@ -383,7 +409,8 @@ public class TableConfig {
         m11.put("12","channel");
         m11.put("13","schedule");
         m11.put("15","category");
-        m11.put("25","picture");
+        //.................数据字典中picture是简写......
+        m11.put("25","metapicture");
         m11.put("26","physicalchannel");
         m11.put("35","series");
         m11.put("44","bundledcontent");

@@ -24,10 +24,10 @@ import java.sql.SQLException;
  */
 @Configuration
 @Slf4j
-public class DruidConfiguration {
+public class DruidConfiguration2 {
 
-    @Bean("jdbcTemplate")
-    public JdbcTemplate getJdbcTemplate(@Qualifier(value = "druidDataSource") DataSource dataSource) {
+    @Bean("jdbcTemplate2")
+    public JdbcTemplate getJdbcTemplate(@Qualifier("backDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource, true);
     }
 
@@ -35,11 +35,11 @@ public class DruidConfiguration {
     @ConfigurationProperties(prefix = "spring.datasource")
     @Data
     class IDatasourceConfig {
-        @Value("${spring.datasource.single.url}")
+        @Value("${spring.datasource.much.url}")
         private String url;
-        @Value("${spring.datasource.single.username}")
+        @Value("${spring.datasource.much.username}")
         private String username;
-        @Value("${spring.datasource.single.password}")
+        @Value("${spring.datasource.much.password}")
         private String password;
         private String driverClassName;
         private int initialSize;
@@ -57,8 +57,7 @@ public class DruidConfiguration {
         private String filters;
         private String connectionProperties;
 
-        @Bean("druidDataSource")     //声明其为Bean实例
-        @Primary  //在同样的DataSource中，首先使用被标注的DataSource
+        @Bean("backDataSource")     //声明其为Bean实例
         public DataSource dataSource() {
             DruidDataSource datasource = new DruidDataSource();
             datasource.setUrl(url);
@@ -90,7 +89,7 @@ public class DruidConfiguration {
 
     }
 
-    @Bean("servletRegistrationBean")
+    @Bean("servletRegistrationBean2")
     public ServletRegistrationBean druidServlet() {
         log.info("******************初始化druid连接池配置*******************");
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
@@ -106,7 +105,7 @@ public class DruidConfiguration {
         return servletRegistrationBean;
     }
 
-    @Bean("filterRegistrationBean")
+    @Bean("filterRegistrationBean2")
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");
