@@ -68,6 +68,7 @@ public class MainService {
             if (tableForDomainIds.contains(name)){
                 values = values + ",domainid";
             }
+            int domainId = tableConfig.getDomainId();
             String sql2txt = "insert into "+name+" ("+values+") values";
             String sql = "select * from "+name;
             if (name.equals("GLOBALCODEMAP")){
@@ -94,7 +95,7 @@ public class MainService {
                 list.forEach(e->{
                     //需要增加domainid属性的表的处理
                     if (tableForDomainIds.contains(name)){
-                        e = e + tableConfig.getDomainId();
+                        e = e + "," + domainId;
                     }
                     String str = sql2txt+"("+e+");";
                     IOUtil.write(writer,str);
@@ -138,8 +139,9 @@ public class MainService {
         if (TableConfig.noChangeTable.contains(table)){
             while (results.next()){
                 StringBuilder builder = new StringBuilder();
-                for (int i=1;i<=columnCount;i++){
-                    String str = results.getString(i);
+                for (int i=0;i<columnCount;i++){
+                    String column = columns[i];
+                    String str = results.getString(column);
                     String s = "'" + str + "',";
                     builder = str==null ? builder.append("null,") : builder.append(s);
                 }
@@ -292,7 +294,8 @@ public class MainService {
         while(columns.next()){
             String column = columns.getString("COLUMN_NAME");
             String dataType = columns.getString("DATA_TYPE");
-            if (isObjType(column)){
+            //todo ...
+            if (isObjType(column) && TableConfig.noChangeTable.contains(table)){
                 builder = new StringBuilder(column).append(",").append(builder.toString());
             }else {
                 builder.append(column).append(",");
