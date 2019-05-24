@@ -35,9 +35,6 @@ public class MediaExportService {
     //smp数据库中的表和sop库中的表的公共column
     private static Map<String,String> columnMap = new HashMap<>();
 
-    //smp向sop写入数据的sql
-    private static List<String> sqlList = new ArrayList<>();
-
     //dbLink的连接名
     private static String linkName;
 
@@ -54,7 +51,9 @@ public class MediaExportService {
             String values = columnMap.get(table);
             String sql = "insert into "+table+" ("+values+") "+"select "+values+" from "+table+"@"+linkName;
             jdbcTemplate.execute(sql);
+            log.info("********{}表的数据导入完成...******",table);
         });
+        log.info("*************smp向sop数据导入完成...***************");
     }
 
     private void init() {
@@ -64,7 +63,7 @@ public class MediaExportService {
         baseMediaTables.add("CHANNEL");
         baseMediaTables.add("PICTUREMAP");
         baseMediaTables.add("METAPICTURE");
-        baseMediaTables.add("PYHSICALCHANNEL");
+//        baseMediaTables.add("PYHSICALCHANNEL");
         baseMediaTables.add("MEDIACONTENT");
         baseMediaTables.add("PROGRAMMEDIACONTENT");
         //todo 关联表待添加...
