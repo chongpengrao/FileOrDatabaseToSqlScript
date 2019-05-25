@@ -51,6 +51,22 @@ public class MediaExportService {
             String values = columnMap.get(table);
             String sql = "insert into "+table+" ("+values+") "+"select "+values+" from "+table+"@"+linkName;
             jdbcTemplate.execute(sql);
+            //TODO sequence的更新
+//            alter sequence DOMAINID increment by 5 nocache;
+//            select DOMAINID.nextval from dual;
+//            alter sequence DOMAINID increment by 1 nocache;
+            String tableId = table + "ID";
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet("select " + tableId + " from " + table +" where rownum=1 order by " + tableId + " desc");
+            int increment = 1;
+            if (rowSet.next()){
+                increment = rowSet.getInt(1);
+            }
+            String str1 = "alter sequence "+table+"ID increment by "+increment+" nocache";
+            String str2 = "select "+table+"ID.nextval from dual";
+            String str3 = "alter sequence "+table+"ID increment by 1 nocache";
+            jdbcTemplate.execute(str1);
+            jdbcTemplate.execute(str2);
+            jdbcTemplate.execute(str3);
             log.info("********{}表的数据导入完成...******",table);
         });
         log.info("*************smp向sop数据导入完成...***************");
@@ -58,15 +74,18 @@ public class MediaExportService {
 
     private void init() {
         log.info("**********loading...**************");
+        //外键约束...先导进去
+        baseMediaTables.add("VSP");
+        baseMediaTables.add("CONTENTDEF");
         baseMediaTables.add("PROGRAM");
         baseMediaTables.add("SERIES");
         baseMediaTables.add("CHANNEL");
-        baseMediaTables.add("PICTUREMAP");
         baseMediaTables.add("METAPICTURE");
-//        baseMediaTables.add("PYHSICALCHANNEL");
+        baseMediaTables.add("PICTURETYPE");
+        baseMediaTables.add("PICTUREMAP");
+        baseMediaTables.add("PHYSICALCHANNEL");
         baseMediaTables.add("MEDIACONTENT");
         baseMediaTables.add("PROGRAMMEDIACONTENT");
-        //todo 关联表待添加...
 
         //dblink的名称
         linkName = tableConfig.getLinkName();
